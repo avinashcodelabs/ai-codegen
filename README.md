@@ -1,6 +1,7 @@
 # Tech used
   - Python
   - OpenAI
+  - ChatGPT
   - Langchain
 
 # Demo
