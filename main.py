@@ -1,17 +1,24 @@
 from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain, SequentialChain
 from argparse import ArgumentParser
 from dotenv import load_dotenv
+import warnings
 
 load_dotenv()
+warnings.filterwarnings("ignore")
 
 parser = ArgumentParser();
 parser.add_argument("--language", default="python")
 parser.add_argument("--task", default="is prime")
 args = parser.parse_args()
 
-llm = OpenAI() # This will look for OPENAI_API_KEY in env variables by default.
+llm = ChatOpenAI(
+    model="deepseek-coder:6.7b",
+    openai_api_base="http://localhost:11434/v1",
+    openai_api_key="doesn't matter"  
+)
 
 code_prompt = PromptTemplate(
     template="write {language} code to {task}",
@@ -49,4 +56,3 @@ print(">>>>> GENERATED CODE")
 print(result["code"])
 print(">>>>> GENERATED TEST")
 print(result["test"])
-
